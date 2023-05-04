@@ -21,42 +21,64 @@ class FilterAssetsBloc extends Bloc<FilterAssetsEvent, FilterAssetsState> {
     FilterAssetsEventSort event,
     Emitter<FilterAssetsState> emit,
   ) async {
-    final list = event.list.removeWhere((e) => e.liked);
-    switch (event.filter) {
-      case AssetsFilterEnum.toAtoZ:
-        emit(state.copyWith(
-          showFilteredL: true,
-          filter: AssetsFilterEnum.toAtoZ,
-          filteredList: [],
-        ));
-        break;
-      case AssetsFilterEnum.toZtoA:
-        emit(state.copyWith(
-          showFilteredL: true,
-          filter: AssetsFilterEnum.toZtoA,
-          filteredList: [],
-        ));
-        break;
-      case AssetsFilterEnum.toLowerPtoHigherP:
-        emit(state.copyWith(
-          showFilteredL: true,
-          filter: AssetsFilterEnum.toLowerPtoHigherP,
-          filteredList: [],
-        ));
-        break;
-      case AssetsFilterEnum.toHigherPtoLowerP:
-        emit(state.copyWith(
-          showFilteredL: true,
-          filter: AssetsFilterEnum.toHigherPtoLowerP,
-          filteredList: [],
-        ));
-        break;
-      default:
-        emit(state.copyWith(
-          showFilteredL: false,
-          filter: AssetsFilterEnum.none,
-          filteredList: [],
-        ));
+    final list = event.list;
+    if (list.isNotEmpty) {
+      emit(state.copyWith(showFilteredL: false));
+      list.removeWhere((e) => e.liked);
+      switch (event.filter) {
+        case AssetsFilterEnum.toAtoZ:
+          list.sort((a, b) {
+            return a.name.compareTo(b.name);
+          });
+          emit(state.copyWith(
+            showFilteredL: true,
+            filter: AssetsFilterEnum.toAtoZ,
+            filteredList: list,
+          ));
+          break;
+        case AssetsFilterEnum.toZtoA:
+          list.sort((a, b) {
+            return b.name.compareTo(a.name);
+          });
+          emit(state.copyWith(
+            showFilteredL: true,
+            filter: AssetsFilterEnum.toZtoA,
+            filteredList: list,
+          ));
+          break;
+        case AssetsFilterEnum.toLowerPtoHigherP:
+          list.sort((a, b) {
+            return a.price.compareTo(b.price);
+          });
+          emit(state.copyWith(
+            showFilteredL: true,
+            filter: AssetsFilterEnum.toLowerPtoHigherP,
+            filteredList: list,
+          ));
+          break;
+        case AssetsFilterEnum.toHigherPtoLowerP:
+          list.sort((a, b) {
+            return b.price.compareTo(a.price);
+          });
+          emit(state.copyWith(
+            showFilteredL: true,
+            filter: AssetsFilterEnum.toHigherPtoLowerP,
+            filteredList: list,
+          ));
+          break;
+        default:
+          emit(state.copyWith(
+            showFilteredL: false,
+            filter: AssetsFilterEnum.none,
+            filteredList: [],
+          ));
+      }
+    } else {
+      emit(state.copyWith(
+        showFilteredL: false,
+        filter: AssetsFilterEnum.none,
+        filteredList: [],
+      ));
     }
   }
 }
