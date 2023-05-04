@@ -2,17 +2,19 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:waddi_wallet_app/app/presentation/bloc/config/config.bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.event.dart';
+
+import 'package:waddi_wallet_app/app/presentation/bloc/config/config.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.event.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.state.dart';
 
 import 'package:waddi_wallet_app/app/presentation/components/molecule/buttons/theme.button.molecule.dart';
 import 'package:waddi_wallet_app/app/presentation/components/organism/list/home_assets.list.organism.dart';
+import 'package:waddi_wallet_app/app/presentation/components/organism/list/home_fav_assets.list.organism.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -77,7 +79,10 @@ class HomeView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
-              children: const [HomeAssetsListsOrganism()],
+              children: const [
+                HomeFavAssetsListOrganism(),
+                HomeAssetsListsOrganism()
+              ],
             ),
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waddi_wallet_app/core/constants/currency.constants.dart';
+
 import 'package:waddi_wallet_app/core/services/db/hive.service.dart';
 
 import 'package:waddi_wallet_app/core/constants/box.constants.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:waddi_wallet_app/app/data/models/coin/coin.model.dart';
 import 'package:waddi_wallet_app/app/domain/datasources/remote/coins/coins.remote.service.dart';
 import 'package:waddi_wallet_app/core/constants/coinstats_api.constants.dart';
@@ -25,8 +23,7 @@ class CoinsRemoteServiceImpl implements CoinsRemoteService {
       return List<CoinModel>.from(res.data['coins'].map(
         (e) => CoinModel.fromJson(e),
       ));
-    } catch (e, s) {
-      log('eeeeee $e', stackTrace: s);
+    } catch (e) {
       rethrow;
     }
   }

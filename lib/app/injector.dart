@@ -18,14 +18,19 @@ import 'package:waddi_wallet_app/app/domain/repositories/config.repository.dart'
 import 'package:waddi_wallet_app/app/data/repositories/config.repository.impl.dart';
 import 'package:waddi_wallet_app/app/data/repositories/coins.repository.impl.dart';
 
+import 'package:waddi_wallet_app/app/domain/datasources/local/coin/coin.local.service.dart';
 import 'package:waddi_wallet_app/app/domain/datasources/remote/coins/coins.remote.service.dart';
 import 'package:waddi_wallet_app/app/domain/datasources/local/config/config.local.service.dart';
 
 import 'package:waddi_wallet_app/app/data/datasources/remote/coins.remote.service.impl.dart';
+import 'package:waddi_wallet_app/app/data/datasources/local/coin/coin.local.service.impl.dart';
 import 'package:waddi_wallet_app/app/data/datasources/local/config/config.local.service.impl.dart';
 
 import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
 import 'package:waddi_wallet_app/app/domain/usecases/config/get_config.usecase.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/coins/add_fav_coin.usecase.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/coins/get_fav_coins.usecase.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/coins/remove_fav_coin.usecase.dart';
 
 
 final injector = GetIt.instance;
@@ -49,18 +54,41 @@ Future<void> initDependencies(EnviromentEnum env) async {
 
   injector.registerSingleton<HiveService>(HiveService());
 
+  injector.registerLazySingleton<CoinLocalService>(
+    () => CoinLocalServiceImpl(
+      hive: injector.get<HiveService>(),
+    ),
+  );
   injector.registerLazySingleton<CoinsRemoteService>(
-    () => CoinsRemoteServiceImpl(dio: injector.get<DioService>()),
+    () => CoinsRemoteServiceImpl(
+      dio: injector.get<DioService>(),
+    ),
   );
 
   injector.registerLazySingleton<CoinstRepository>(
     () => CoinsRepositoryImpl(
+      coinLocalService: injector.get<CoinLocalService>(),
       coinsRemoteService: injector.get<CoinsRemoteService>(),
     ),
   );
 
   injector.registerLazySingleton<GetCoinsUsecase>(
     () => GetCoinsUsecase(
+      coinstRepository: injector.get<CoinstRepository>(),
+    ),
+  );
+  injector.registerLazySingleton<RemoveFavCoinsUsecase>(
+    () => RemoveFavCoinsUsecase(
+      coinstRepository: injector.get<CoinstRepository>(),
+    ),
+  );
+  injector.registerLazySingleton<AddFavCoinsUsecase>(
+    () => AddFavCoinsUsecase(
+      coinstRepository: injector.get<CoinstRepository>(),
+    ),
+  );
+  injector.registerLazySingleton<GetFavCoinsUsecase>(
+    () => GetFavCoinsUsecase(
       coinstRepository: injector.get<CoinstRepository>(),
     ),
   );

@@ -1,5 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:waddi_wallet_app/app/domain/usecases/coins/add_fav_coin.usecase.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/coins/get_fav_coins.usecase.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/coins/remove_fav_coin.usecase.dart';
+
 import 'package:waddi_wallet_app/core/enum/exceptions.enum.dart';
 import 'package:waddi_wallet_app/core/exceptions/custom.exceptions.dart';
 
@@ -11,9 +15,19 @@ import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dar
 
 class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
   final GetCoinsUsecase _getCoinsUsecase;
+  final AddFavCoinsUsecase _addFavCoinsUsecase;
+  final GetFavCoinsUsecase _getFavCoinsUsecase;
+  final RemoveFavCoinsUsecase _removeFavCoinsUsecase;
 
-  AssetsBloc(this._getCoinsUsecase) : super(const AssetsState()) {
+  AssetsBloc(
+    this._getCoinsUsecase,
+    this._addFavCoinsUsecase,
+    this._getFavCoinsUsecase,
+    this._removeFavCoinsUsecase,
+  ) : super(const AssetsState()) {
     on<AssestEventInit>(_onInit);
+    on<AssestEventAddToFav>(_onAddFav);
+    on<AssestEventRemoveFromFav>(_onRemoveFav);
   }
 
   Future<void> _onInit(
@@ -40,10 +54,31 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
     }, (List<CoinEntity> r) {
       emit(state.copyWith(
         status: 200,
-        list: r,
+        coins: r,
         loading: false,
         error: ExceptionEnum.none,
       ));
     });
+  }
+
+  Future<void> _onAddFav(
+    AssestEventAddToFav event,
+    Emitter<AssetsState> emit,
+  ) async {
+    final coin = state.coins[event.index].copyWith(liked: true);
+    state.coins[event.index] = coin;
+    emit(state.copyWith(coins: state.coins));
+    emit(state.copyWith(favs: [...state.favs, coin]));
+  }
+
+  Future<void> _onRemoveFav(
+    AssestEventRemoveFromFav event,
+    Emitter<AssetsState> emit,
+  ) async {
+    final coin = state.coins[event.index].copyWith(liked: false);
+    state.coins[event.index] = coin;
+    state.favs.removeWhere((e) => e.id == event.id);
+    emit(state.copyWith(favs: [...state.favs]));
+    emit(state.copyWith(coins: state.coins));
   }
 }

@@ -1,3 +1,18 @@
 {
-    "title": "Wallet"
+    "title": "Wallet",
+    "assets": "Assets",
+    "favorites": "Favorites",
+    "filters": "Filters",
+    "filter": "Filter",
+    "reset": "Reset",
+    "sortByAlphabeticalOrder": "Sort By Alphabetical Order",
+    "sortByPrices": "Sort By Prices",
+    "fromA": "From A",
+    "toA": "to A",
+    "fromZ": "From Z",
+    "toZ": "to Z",
+    "fromLowestPrice": "From Lowest Price",
+    "toLowestPrice": "to Lowest Price",
+    "fromHighestPrice": "From Highest Price",
+    "toHighestPrice": "to Highest Price"
 }

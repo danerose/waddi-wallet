@@ -10,7 +10,8 @@ class AssetsState extends Equatable {
     this.status = 0,
     this.currency = CurrencyConstants.usd,
     this.loading = false,
-    this.list = const [],
+    this.coins = const [],
+    this.favs = const [],
     this.error = ExceptionEnum.none,
   });
 
@@ -19,7 +20,8 @@ class AssetsState extends Equatable {
   final int status;
   final String currency;
   final bool loading;
-  final List<CoinEntity> list;
+  final List<CoinEntity> coins;
+  final List<CoinEntity> favs;
   final ExceptionEnum error;
 
   AssetsState copyWith({
@@ -28,7 +30,8 @@ class AssetsState extends Equatable {
     int? status,
     String? currency,
     bool? loading,
-    List<CoinEntity>? list,
+    List<CoinEntity>? coins,
+    List<CoinEntity>? favs,
     ExceptionEnum? error,
   }) {
     return AssetsState(
@@ -37,10 +40,22 @@ class AssetsState extends Equatable {
       status: status ?? this.status,
       currency: currency ?? this.currency,
       loading: loading ?? this.loading,
-      list: list ?? this.list,
+      coins: coins ?? this.coins,
+      favs: favs ?? this.favs,
       error: error ?? this.error,
     );
   }
+
+  List<CoinEntity> copyListItemWith({
+    required int index,
+    required String id,
+    required CoinEntity coin,
+  }) {
+    coins[index] = coin;
+    return coins;
+  }
+  
+  
 
   @override
   List<Object?> get props => [
@@ -49,7 +64,8 @@ class AssetsState extends Equatable {
         status,
         currency,
         loading,
-        list,
+        coins,
+        favs,
         error,
       ];
 }

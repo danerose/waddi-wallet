@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waddi_wallet_app/app/domain/entities/coin/coin.entity.dart';
+import 'package:waddi_wallet_app/app/presentation/bloc/config/config.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/components/atom/image/network_image.atom.dart';
+import 'package:waddi_wallet_app/app/presentation/components/atom/text/price.text.atom.dart';
 import 'package:waddi_wallet_app/app/presentation/components/molecule/chips/increase.chip.molecule.dart';
 import 'package:waddi_wallet_app/core/constants/colors.constants.dart';
 
 class AssetCardMolecule extends StatelessWidget {
-  const AssetCardMolecule({super.key, required this.coin});
+  const AssetCardMolecule({
+    super.key,
+    required this.coin,
+    required this.onLikePressed,
+    required this.onCardPressed,
+  });
 
   final CoinEntity coin;
+  final Function(bool liked) onLikePressed;
+  final Function() onCardPressed;
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.5,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {},
+        onTap: onCardPressed,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
           child: Row(
@@ -33,7 +43,10 @@ class AssetCardMolecule extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(coin.name),
-                        Text(coin.price.toString()),
+                        PriceTextAtom(
+                          price: coin.price,
+                          format: context.read<ConfigBloc>().state.currency,
+                        ),
                       ],
                     ),
                     const SizedBox(height: 5),
@@ -58,10 +71,22 @@ class AssetCardMolecule extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite_border,
+              Visibility(
+                visible: coin.liked,
+                replacement: IconButton(
+                  onPressed: () => onLikePressed(coin.liked),
+                  icon: const Icon(
+                    Icons.favorite_border,
+                  ),
+                ),
+                child: IconButton(
+                  onPressed: () => onLikePressed(
+                    coin.liked,
+                  ),
+                  icon: const Icon(
+                    color: ColorsConstants.error,
+                    Icons.favorite,
+                  ),
                 ),
               )
             ],

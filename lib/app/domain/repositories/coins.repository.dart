@@ -8,4 +8,8 @@ abstract class CoinstRepository {
     required int limit,
     required String currency,
   });
+  
+  Future<void> addFavoriteCoin({required CoinEntity coin});
+  Future<void> removeFavoriteCoin({required CoinEntity coin});
+  Future<List<CoinEntity>> getFavoritesCoins();
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class IncreaseChipMolecule extends StatelessWidget {
   const IncreaseChipMolecule({
     super.key,
+    this.fontSize = 12,
+    this.padding = const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
     required this.normalColor,
     required this.increaseColor,
     required this.decreaseColor,
@@ -13,6 +15,8 @@ class IncreaseChipMolecule extends StatelessWidget {
   final Color decreaseColor;
   final Color increaseColor;
   final double data;
+  final double fontSize;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +27,13 @@ class IncreaseChipMolecule extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+          padding: padding,
           child: Text(
             '+${data.toString()}',
             style: Theme.of(context)
                 .textTheme
                 .labelSmall!
-                .copyWith(color: increaseColor),
+                .copyWith(color: increaseColor, fontSize: fontSize),
           ),
         ),
       );
@@ -40,13 +44,13 @@ class IncreaseChipMolecule extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+          padding: padding,
           child: Text(
             '$data',
             style: Theme.of(context)
                 .textTheme
                 .labelSmall!
-                .copyWith(color: decreaseColor),
+                .copyWith(color: decreaseColor, fontSize: fontSize),
           ),
         ),
       );
@@ -57,13 +61,13 @@ class IncreaseChipMolecule extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+          padding: padding,
           child: Text(
             '$data',
             style: Theme.of(context)
                 .textTheme
                 .labelSmall!
-                .copyWith(color: normalColor),
+                .copyWith(color: normalColor, fontSize: fontSize),
           ),
         ),
       );

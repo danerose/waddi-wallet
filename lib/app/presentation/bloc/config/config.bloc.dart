@@ -1,7 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waddi_wallet_app/core/constants/currency.constants.dart';
+
 import 'package:waddi_wallet_app/core/constants/routes.constants.dart';
+
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.event.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.state.dart';
 
@@ -26,7 +27,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     );
     emit(state.copyWith(
       theme: config.theme,
-      currency: config.currency,
+      currency: config.currency == '' ? CurrencyConstants.usd : config.currency,
       route: RoutesConstants.home,
     ));
   }
@@ -35,7 +36,6 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     ConfigEventChangeTheme event,
     Emitter<ConfigState> emit,
   ) async {
-    log('${event.theme.name}');
     emit(state.copyWith(
       theme: event.theme,
     ));

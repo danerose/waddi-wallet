@@ -19,8 +19,9 @@ class CoinModel extends CoinEntity {
     required num priceChange1w,
     required String websiteUrl,
     required String redditUrl,
-    required String twitterUrl,
     required List<String> exp,
+    required bool liked,
+    required String twitterUrl,
   }) : super(
           id: id,
           icon: icon,
@@ -39,6 +40,7 @@ class CoinModel extends CoinEntity {
           websiteUrl: websiteUrl,
           redditUrl: redditUrl,
           twitterUrl: twitterUrl,
+          liked: liked,
           exp: exp,
         );
 
@@ -97,6 +99,7 @@ class CoinModel extends CoinEntity {
         'twitterUrl',
         '',
       ),
+      liked: ValidatorUtils.containsKeyReturn<bool>(json, 'liked', false),
       exp: List<String>.from(
         ValidatorUtils.containsKeyReturn(json, 'exp', []).map(
           (e) => e,
