@@ -10,7 +10,12 @@ class GetCoinsUsecase {
   Future<Either<CustomException, List<CoinEntity>>> execute({
     required int skip,
     required int limit,
+    required String currency,
   }) async {
-    return await coinstRepository.getCoins(skip: skip, limit: limit);
+    return await coinstRepository.getCoins(
+      skip: skip,
+      limit: limit,
+      currency: currency,
+    );
   }
 }

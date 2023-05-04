@@ -6,5 +6,6 @@ abstract class CoinstRepository {
   Future<Either<CustomException, List<CoinEntity>>> getCoins({
     required int skip,
     required int limit,
+    required String currency,
   });
 }

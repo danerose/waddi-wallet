@@ -4,6 +4,7 @@ import 'package:waddi_wallet_app/core/constants/colors.constants.dart';
 
 final ThemeData walletDark = ThemeData(
   fontFamily: 'Alexandria',
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
+  useMaterial3: true,
   colorSchemeSeed: injector.get<ColorsConstants>().primary,
 );

@@ -1,11 +1,11 @@
 class ValidatorUtils {
-  static dynamic containsKeyReturn(
+  static T containsKeyReturn<T>(
     Map<String, dynamic>? json,
     String key,
-    dynamic value,
+    T value,
   ) {
     if (json != null && json.containsKey(key)) {
-      return json[key];
+      return json[key] as T;
     }
     {
       return value;

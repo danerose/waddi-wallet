@@ -1,6 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:waddi_wallet_app/app/data/db/config/config.dao.dart';
+import 'package:waddi_wallet_app/core/constants/box.constants.dart';
 
 class HiveService {
   Future<void> init() async {
@@ -10,9 +12,13 @@ class HiveService {
     await _initBoxes();
   }
 
-  Future<void> _registerAdapters() async {}
+  Future<void> _registerAdapters() async {
+    Hive.registerAdapter(ConfigDaoAdapter());
+  }
 
-  Future<void> _initBoxes() async {}
+  Future<void> _initBoxes() async {
+    await Hive.openBox<ConfigDao>(BoxConstants.config);
+  }
 
   Future<void> addBox<T>(String name, T value) async {
     final box = Hive.box<T>(name);

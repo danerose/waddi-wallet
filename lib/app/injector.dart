@@ -2,21 +2,31 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:waddi_wallet_app/app/data/datasources/remote/coins.remote.service.impl.dart';
-import 'package:waddi_wallet_app/app/data/repositories/coins.repository.impl.dart';
-import 'package:waddi_wallet_app/app/domain/datasources/remote/coins/coins.remote.service.dart';
-import 'package:waddi_wallet_app/app/domain/repositories/coins.repository.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
 
 import 'package:waddi_wallet_app/core/config/size/size.config.dart';
-import 'package:waddi_wallet_app/core/constants/coinstats_api.constants.dart';
 
 import 'package:waddi_wallet_app/core/enum/enviroment.enum.dart';
-
 import 'package:waddi_wallet_app/core/constants/colors.constants.dart';
+import 'package:waddi_wallet_app/core/constants/coinstats_api.constants.dart';
 
 import 'package:waddi_wallet_app/core/services/db/hive.service.dart';
 import 'package:waddi_wallet_app/core/services/network/network.services.dart';
+
+import 'package:waddi_wallet_app/app/domain/repositories/coins.repository.dart';
+import 'package:waddi_wallet_app/app/domain/repositories/config.repository.dart';
+
+import 'package:waddi_wallet_app/app/data/repositories/config.repository.impl.dart';
+import 'package:waddi_wallet_app/app/data/repositories/coins.repository.impl.dart';
+
+import 'package:waddi_wallet_app/app/domain/datasources/remote/coins/coins.remote.service.dart';
+import 'package:waddi_wallet_app/app/domain/datasources/local/config/config.local.service.dart';
+
+import 'package:waddi_wallet_app/app/data/datasources/remote/coins.remote.service.impl.dart';
+import 'package:waddi_wallet_app/app/data/datasources/local/config/config.local.service.impl.dart';
+
+import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/config/get_config.usecase.dart';
+
 
 final injector = GetIt.instance;
 
@@ -52,6 +62,27 @@ Future<void> initDependencies(EnviromentEnum env) async {
   injector.registerLazySingleton<GetCoinsUsecase>(
     () => GetCoinsUsecase(
       coinstRepository: injector.get<CoinstRepository>(),
+    ),
+  );
+
+
+
+
+  //* Config dependencies
+
+  injector.registerLazySingleton<ConfigLocalService>(
+    () => ConfigLocalServiceImpl(hive: injector.get<HiveService>()),
+  );
+
+  injector.registerLazySingleton<ConfigRepository>(
+    () => ConfigRepositoryImpl(
+      configLocalService: injector.get<ConfigLocalService>(),
+    ),
+  );
+
+  injector.registerLazySingleton<GetConfigUsecase>(
+    () => GetConfigUsecase(
+      configRepository: injector.get<ConfigRepository>(),
     ),
   );
 }

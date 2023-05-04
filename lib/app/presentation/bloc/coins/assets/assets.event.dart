@@ -7,5 +7,6 @@ abstract class AssetsEvent extends Equatable {
 }
 
 class AssestEventInit extends AssetsEvent {
-  const AssestEventInit();
+  const AssestEventInit({required this.currency});
+  final String currency;
 }

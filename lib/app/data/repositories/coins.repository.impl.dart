@@ -11,9 +11,14 @@ class CoinsRepositoryImpl implements CoinstRepository {
   Future<Either<CustomException, List<CoinEntity>>> getCoins({
     required int skip,
     required int limit,
+    required String currency,
   }) async {
     try {
-      final res = await coinsRemoteService.getCoins(skip: skip, limit: limit);
+      final res = await coinsRemoteService.getCoins(
+        skip: skip,
+        limit: limit,
+        currency: currency,
+      );
       return Right(res.map((e) => CoinEntity.fromModel(e)).toList());
     } on CustomException catch (e) {
       return Left(e);

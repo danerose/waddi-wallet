@@ -1,11 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:waddi_wallet_app/app/domain/entities/coin/coin.entity.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
 
-import 'package:waddi_wallet_app/app/presentation/bloc/assets/assets.event.dart';
-import 'package:waddi_wallet_app/app/presentation/bloc/assets/assets.state.dart';
 import 'package:waddi_wallet_app/core/enum/exceptions.enum.dart';
 import 'package:waddi_wallet_app/core/exceptions/custom.exceptions.dart';
+
+import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.event.dart';
+import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.state.dart';
+
+import 'package:waddi_wallet_app/app/domain/entities/coin/coin.entity.dart';
+import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
 
 class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
   final GetCoinsUsecase _getCoinsUsecase;
@@ -18,9 +20,15 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
     AssestEventInit event,
     Emitter<AssetsState> emit,
   ) async {
+    emit(state.copyWith(
+      loading: true,
+      currency: event.currency,
+    ));
+
     final res = await _getCoinsUsecase.execute(
       skip: state.skip,
       limit: state.limit,
+      currency: event.currency,
     );
 
     res.fold((CustomException l) {

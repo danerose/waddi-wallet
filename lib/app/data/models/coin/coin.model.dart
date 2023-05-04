@@ -8,15 +8,15 @@ class CoinModel extends CoinEntity {
     required String name,
     required String symbol,
     required int rank,
-    required double price,
-    required int priceBtc,
-    required double volume,
-    required double marketCap,
-    required double availableSupply,
-    required double totalSupply,
-    required double priceChange1h,
-    required double priceChange1d,
-    required double priceChange1w,
+    required num price,
+    required num priceBtc,
+    required num volume,
+    required num marketCap,
+    required num availableSupply,
+    required num totalSupply,
+    required num priceChange1h,
+    required num priceChange1d,
+    required num priceChange1w,
     required String websiteUrl,
     required String redditUrl,
     required String twitterUrl,
@@ -44,41 +44,64 @@ class CoinModel extends CoinEntity {
 
   factory CoinModel.fromJson(Map<String, dynamic>? json) {
     return CoinModel(
-      id: ValidatorUtils.containsKeyReturn(json, 'id', ''),
-      icon: ValidatorUtils.containsKeyReturn(json, 'icon', ''),
-      name: ValidatorUtils.containsKeyReturn(json, 'name', ''),
-      symbol: ValidatorUtils.containsKeyReturn(json, 'symbol', ''),
-      rank: int.parse(ValidatorUtils.containsKeyReturn(json, 'rank', 0)),
-      price: double.parse(ValidatorUtils.containsKeyReturn(json, 'price', '0')),
-      priceBtc: int.parse(ValidatorUtils.containsKeyReturn(
+      id: ValidatorUtils.containsKeyReturn<String>(json, 'id', ''),
+      icon: ValidatorUtils.containsKeyReturn<String>(json, 'icon', ''),
+      name: ValidatorUtils.containsKeyReturn<String>(json, 'name', ''),
+      symbol: ValidatorUtils.containsKeyReturn<String>(json, 'symbol', ''),
+      rank: ValidatorUtils.containsKeyReturn<int>(json, 'rank', 0),
+      price: ValidatorUtils.containsKeyReturn<num>(json, 'price', 0),
+      priceBtc: ValidatorUtils.containsKeyReturn<num>(
         json,
         'priceBtc',
         0,
-      )),
-      volume: double.parse(
-        ValidatorUtils.containsKeyReturn(json, 'volume', '0'),
       ),
-      marketCap: double.parse(
-          ValidatorUtils.containsKeyReturn(json, 'marketCap', '0')),
-      availableSupply: double.parse(
-        ValidatorUtils.containsKeyReturn(json, 'availableSupply', '0'),
+      volume: ValidatorUtils.containsKeyReturn<num>(json, 'volume', 0),
+      marketCap: ValidatorUtils.containsKeyReturn<num>(json, 'marketCap', 0),
+      availableSupply: ValidatorUtils.containsKeyReturn<num>(
+        json,
+        'availableSupply',
+        0,
       ),
-      totalSupply: double.parse(
-        ValidatorUtils.containsKeyReturn(json, 'totalSupply', '0'),
+      totalSupply: ValidatorUtils.containsKeyReturn<num>(
+        json,
+        'totalSupply',
+        0,
       ),
-      priceChange1h: double.parse(
-        ValidatorUtils.containsKeyReturn(json, 'priceChange1h', '0'),
+      priceChange1h: ValidatorUtils.containsKeyReturn<num>(
+        json,
+        'priceChange1h',
+        0,
       ),
-      priceChange1d: double.parse(
-        ValidatorUtils.containsKeyReturn(json, 'priceChange1d', '0'),
+      priceChange1d: ValidatorUtils.containsKeyReturn<num>(
+        json,
+        'priceChange1d',
+        0,
       ),
-      priceChange1w: double.parse(
-        ValidatorUtils.containsKeyReturn(json, 'priceChange1w', '0'),
+      priceChange1w: ValidatorUtils.containsKeyReturn<num>(
+        json,
+        'priceChange1w',
+        0,
       ),
-      websiteUrl: ValidatorUtils.containsKeyReturn(json, 'websiteUrl', ''),
-      redditUrl: ValidatorUtils.containsKeyReturn(json, 'redditUrl', ''),
-      twitterUrl: ValidatorUtils.containsKeyReturn(json, 'twitterUrl', ''),
-      exp: ValidatorUtils.containsKeyReturn(json, 'exp', []),
+      websiteUrl: ValidatorUtils.containsKeyReturn<String>(
+        json,
+        'websiteUrl',
+        '',
+      ),
+      redditUrl: ValidatorUtils.containsKeyReturn<String>(
+        json,
+        'redditUrl',
+        '',
+      ),
+      twitterUrl: ValidatorUtils.containsKeyReturn<String>(
+        json,
+        'twitterUrl',
+        '',
+      ),
+      exp: List<String>.from(
+        ValidatorUtils.containsKeyReturn(json, 'exp', []).map(
+          (e) => e,
+        ),
+      ),
     );
   }
 }

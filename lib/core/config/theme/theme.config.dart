@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waddi_wallet_app/core/config/theme/dark_theme.dart';
 import 'package:waddi_wallet_app/core/config/theme/light_theme.dart';
 
 class CustomTheme {
@@ -7,6 +8,6 @@ class CustomTheme {
   }
 
   static ThemeData dark() {
-    return walletLight;
+    return walletDark;
   }
 }
