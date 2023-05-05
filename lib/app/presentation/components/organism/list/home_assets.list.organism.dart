@@ -4,6 +4,7 @@ import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.event
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/filters/filter_assets.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/filters/filter_assets.event.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/filters/filter_assets.state.dart';
+import 'package:waddi_wallet_app/app/presentation/components/molecule/card/asset_detail.card.molecule.dart';
 import 'package:waddi_wallet_app/app/presentation/components/molecule/card/filters_assets.card.molecule.dart';
 import 'package:waddi_wallet_app/core/enum/assets_filters.enum.dart';
 
@@ -93,7 +94,36 @@ class HomeAssetsListsOrganism extends StatelessWidget {
                           visible: !filter.filteredList[i].liked,
                           child: AssetCardMolecule(
                             coin: filter.filteredList[i],
-                            onCardPressed: () {},
+                            onCardPressed: () async {
+                              await showModalBottomSheet<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AssetDetailCardMolecule(
+                                    coin: filter.filteredList[i],
+                                    onLikePressed: (bool liked) {
+                                      if (state.favs.length >= 4) {
+                                      } else {
+                                        if (liked) {
+                                          context.read<AssetsBloc>().add(
+                                                AssestEventRemoveFromFav(
+                                                  id: state.coins[i].id,
+                                                  index: i,
+                                                ),
+                                              );
+                                        } else {
+                                          context.read<AssetsBloc>().add(
+                                                AssestEventAddToFav(
+                                                  id: state.coins[i].id,
+                                                  index: i,
+                                                ),
+                                              );
+                                        }
+                                      }
+                                    },
+                                  );
+                                },
+                              );
+                            },
                             onLikePressed: (bool liked) {
                               if (state.favs.length >= 4) {
                               } else {
@@ -129,7 +159,36 @@ class HomeAssetsListsOrganism extends StatelessWidget {
                       visible: !state.coins[i].liked,
                       child: AssetCardMolecule(
                         coin: state.coins[i],
-                        onCardPressed: () {},
+                        onCardPressed: () async {
+                          await showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AssetDetailCardMolecule(
+                                coin: state.coins[i],
+                                onLikePressed: (bool liked) {
+                                  if (state.favs.length >= 4) {
+                                  } else {
+                                    if (liked) {
+                                      context.read<AssetsBloc>().add(
+                                            AssestEventRemoveFromFav(
+                                              id: state.coins[i].id,
+                                              index: i,
+                                            ),
+                                          );
+                                    } else {
+                                      context.read<AssetsBloc>().add(
+                                            AssestEventAddToFav(
+                                              id: state.coins[i].id,
+                                              index: i,
+                                            ),
+                                          );
+                                    }
+                                  }
+                                },
+                              );
+                            },
+                          );
+                        },
                         onLikePressed: (bool liked) {
                           if (state.favs.length >= 4) {
                           } else {

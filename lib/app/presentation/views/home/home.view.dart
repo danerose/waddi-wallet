@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -11,6 +9,7 @@ import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.event
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.event.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.state.dart';
+import 'package:waddi_wallet_app/app/presentation/components/molecule/buttons/currency_dropdown.button.molecule.dart';
 
 import 'package:waddi_wallet_app/app/presentation/components/molecule/buttons/theme.button.molecule.dart';
 import 'package:waddi_wallet_app/app/presentation/components/organism/list/home_assets.list.organism.dart';
@@ -74,6 +73,27 @@ class HomeView extends StatelessWidget {
               }
             },
           ),
+          actions: [
+            BlocBuilder<ConfigBloc, ConfigState>(
+              buildWhen: (p, c) => p.currency != c.currency,
+              builder: (BuildContext context, ConfigState config) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CurrencyDropdownButtonMolecule(
+                    currency: config.currency,
+                    onChanged: (String value) {
+                      context.read<ConfigBloc>().add(
+                            ConfigEventChangeCurrency(currency: value),
+                          );
+                      context.read<AssetsBloc>().add(
+                            AssestEventInit(currency: value),
+                          );
+                    },
+                  ),
+                );
+              },
+            )
+          ],
         ),
         body: SafeArea(
           child: Padding(

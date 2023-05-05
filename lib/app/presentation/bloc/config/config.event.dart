@@ -15,3 +15,7 @@ class ConfigEventChangeTheme extends ConfigEvent {
   const ConfigEventChangeTheme({required this.theme});
   final ThemeMode theme;
 }
+class ConfigEventChangeCurrency extends ConfigEvent {
+  const ConfigEventChangeCurrency({required this.currency});
+  final String currency;
+}

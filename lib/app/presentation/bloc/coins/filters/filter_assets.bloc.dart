@@ -8,6 +8,7 @@ class FilterAssetsBloc extends Bloc<FilterAssetsEvent, FilterAssetsState> {
   FilterAssetsBloc() : super(const FilterAssetsState()) {
     on<FilterAssetsEventSetFilter>(_onSetFilter);
     on<FilterAssetsEventSort>(_onSortCoins);
+    on<FilterAssetsEventResetFilter>(_onResetFilter);
   }
 
   void _onSetFilter(
@@ -15,6 +16,19 @@ class FilterAssetsBloc extends Bloc<FilterAssetsEvent, FilterAssetsState> {
     Emitter<FilterAssetsState> emit,
   ) async {
     emit(state.copyWith(filter: event.filter));
+  }
+
+  void _onResetFilter(
+    FilterAssetsEventResetFilter event,
+    Emitter<FilterAssetsState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        filter: AssetsFilterEnum.none,
+        filteredList: [],
+        showFilteredL: false,
+      ),
+    );
   }
 
   Future<void> _onSortCoins(
@@ -72,13 +86,8 @@ class FilterAssetsBloc extends Bloc<FilterAssetsEvent, FilterAssetsState> {
             filter: AssetsFilterEnum.none,
             filteredList: [],
           ));
+          break;
       }
-    } else {
-      emit(state.copyWith(
-        showFilteredL: false,
-        filter: AssetsFilterEnum.none,
-        filteredList: [],
-      ));
     }
   }
 }

@@ -14,5 +14,12 @@
     "fromLowestPrice": "Menor Precio",
     "toLowestPrice": "a Menor Precio",
     "fromHighestPrice": "Mayor Precio",
-    "toHighestPrice": "a Mayor Precio"
+    "toHighestPrice": "a Mayor Precio",
+    "price": "Precio",
+    "history": "Historial",
+    "oneHour": "1h",
+    "oneDay": "1d",
+    "oneWeek": "1s",
+    "addToFavorites": "Agregar a Favoritos",
+    "removeFromFavorites": "Quitar de Favoritos"
 }

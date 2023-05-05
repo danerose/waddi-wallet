@@ -47,6 +47,9 @@ class App extends StatelessWidget {
         )
       ],
       child: BlocBuilder<ConfigBloc, ConfigState>(
+        buildWhen: (p, c) {
+          return p.theme != c.theme;
+        },
         builder: (BuildContext context, ConfigState config) {
           return MaterialApp(
             title: 'Wallet',

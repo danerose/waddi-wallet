@@ -18,3 +18,7 @@ class FilterAssetsEventSetFilter extends FilterAssetsEvent {
   const FilterAssetsEventSetFilter({required this.filter});
   final AssetsFilterEnum filter;
 }
+
+class FilterAssetsEventResetFilter extends FilterAssetsEvent {
+  const FilterAssetsEventResetFilter();
+}

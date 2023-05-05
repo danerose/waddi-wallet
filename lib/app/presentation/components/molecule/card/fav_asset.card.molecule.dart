@@ -23,7 +23,7 @@ class FavcAssetCardMolecule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: ColorsConstants.textAlt.withOpacity(0.2),
@@ -34,7 +34,7 @@ class FavcAssetCardMolecule extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: onFavPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +45,7 @@ class FavcAssetCardMolecule extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 url: coin.icon,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(height: 10),
               PriceTextAtom(
                 fontSize: 10,
                 price: coin.price,
@@ -59,7 +59,7 @@ class FavcAssetCardMolecule extends StatelessWidget {
                     coin.symbol,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: ColorsConstants.textAlt,
-                          fontSize: 10,
+                          fontSize: 9,
                         ),
                   ),
                   const SizedBox(width: 5),

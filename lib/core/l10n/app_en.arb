@@ -14,5 +14,12 @@
     "fromLowestPrice": "From Lowest Price",
     "toLowestPrice": "to Lowest Price",
     "fromHighestPrice": "From Highest Price",
-    "toHighestPrice": "to Highest Price"
+    "toHighestPrice": "to Highest Price",
+    "price": "Price",
+    "history": "History",
+    "oneHour": "1h",
+    "oneDay": "1d",
+    "oneWeek": "1w",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites"
 }

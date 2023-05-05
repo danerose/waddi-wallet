@@ -28,14 +28,15 @@ class FiltersAssetCardMolecule extends StatelessWidget {
                 children: [
                   Text(context.l10n.filters),
                   TextButton(
+                    child: Text(context.l10n.reset),
                     onPressed: () {
                       context
                           .read<FilterAssetsBloc>()
-                          .add(const FilterAssetsEventSetFilter(
-                            filter: AssetsFilterEnum.none,
-                          ));
+                          .add(
+                            const FilterAssetsEventResetFilter(),
+                          );
+                      Navigator.pop(context, AssetsFilterEnum.none);
                     },
-                    child: Text(context.l10n.reset),
                   ),
                 ],
               ),

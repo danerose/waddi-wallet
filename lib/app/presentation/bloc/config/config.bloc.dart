@@ -14,6 +14,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   ConfigBloc(this._getConfigUsecase) : super(const ConfigState()) {
     on<ConfigEventInit>(_onInit);
     on<ConfigEventChangeTheme>(_onChangeTheme);
+    on<ConfigEventChangeCurrency>(_onChangeCurrency);
   }
 
   Future<void> _onInit(
@@ -39,5 +40,12 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     emit(state.copyWith(
       theme: event.theme,
     ));
+  }
+
+  Future<void> _onChangeCurrency(
+    ConfigEventChangeCurrency event,
+    Emitter<ConfigState> emit,
+  ) async {
+    emit(state.copyWith(currency: event.currency));
   }
 }
