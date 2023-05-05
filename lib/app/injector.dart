@@ -28,9 +28,6 @@ import 'package:waddi_wallet_app/app/data/datasources/local/config/config.local.
 
 import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
 import 'package:waddi_wallet_app/app/domain/usecases/config/get_config.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/add_fav_coin.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/get_fav_coins.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/remove_fav_coin.usecase.dart';
 
 
 final injector = GetIt.instance;
@@ -77,23 +74,6 @@ Future<void> initDependencies(EnviromentEnum env) async {
       coinstRepository: injector.get<CoinstRepository>(),
     ),
   );
-  injector.registerLazySingleton<RemoveFavCoinsUsecase>(
-    () => RemoveFavCoinsUsecase(
-      coinstRepository: injector.get<CoinstRepository>(),
-    ),
-  );
-  injector.registerLazySingleton<AddFavCoinsUsecase>(
-    () => AddFavCoinsUsecase(
-      coinstRepository: injector.get<CoinstRepository>(),
-    ),
-  );
-  injector.registerLazySingleton<GetFavCoinsUsecase>(
-    () => GetFavCoinsUsecase(
-      coinstRepository: injector.get<CoinstRepository>(),
-    ),
-  );
-
-
 
 
   //* Config dependencies

@@ -18,9 +18,6 @@ import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.bloc.
 
 import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dart';
 import 'package:waddi_wallet_app/app/domain/usecases/config/get_config.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/add_fav_coin.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/get_fav_coins.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/remove_fav_coin.usecase.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -37,9 +34,6 @@ class App extends StatelessWidget {
         BlocProvider<AssetsBloc>(
           create: (_) => AssetsBloc(
             injector.get<GetCoinsUsecase>(),
-            injector.get<AddFavCoinsUsecase>(),
-            injector.get<GetFavCoinsUsecase>(),
-            injector.get<RemoveFavCoinsUsecase>(),
           ),
         ),
         BlocProvider(

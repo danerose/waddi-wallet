@@ -1,10 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:waddi_wallet_app/app/domain/usecases/coins/add_fav_coin.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/get_fav_coins.usecase.dart';
-import 'package:waddi_wallet_app/app/domain/usecases/coins/remove_fav_coin.usecase.dart';
 
 import 'package:waddi_wallet_app/core/enum/exceptions.enum.dart';
 import 'package:waddi_wallet_app/core/exceptions/custom.exceptions.dart';
@@ -17,15 +12,9 @@ import 'package:waddi_wallet_app/app/domain/usecases/coins/get_coins.usecase.dar
 
 class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
   final GetCoinsUsecase _getCoinsUsecase;
-  final AddFavCoinsUsecase _addFavCoinsUsecase;
-  final GetFavCoinsUsecase _getFavCoinsUsecase;
-  final RemoveFavCoinsUsecase _removeFavCoinsUsecase;
 
   AssetsBloc(
     this._getCoinsUsecase,
-    this._addFavCoinsUsecase,
-    this._getFavCoinsUsecase,
-    this._removeFavCoinsUsecase,
   ) : super(const AssetsState()) {
     on<AssestEventInit>(_onInit);
     on<AssestEventAddToFav>(_onAddFav);
