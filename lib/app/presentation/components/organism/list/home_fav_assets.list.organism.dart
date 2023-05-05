@@ -16,7 +16,6 @@ class HomeFavAssetsListOrganism extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AssetsBloc, AssetsState>(
-      buildWhen: (p, c) => p.favs.length != c.favs.length,
       builder: (BuildContext context, AssetsState state) {
         if (state.favs.isEmpty) {
           return const SizedBox.shrink();
@@ -46,23 +45,20 @@ class HomeFavAssetsListOrganism extends StatelessWidget {
                             return AssetDetailCardMolecule(
                               coin: state.favs[i],
                               onLikePressed: (bool liked) {
-                                if (state.favs.length >= 4) {
+                                if (liked) {
+                                  context.read<AssetsBloc>().add(
+                                        AssestEventRemoveFromFav(
+                                          id: state.favs[i].id,
+                                          index: i,
+                                        ),
+                                      );
                                 } else {
-                                  if (liked) {
-                                    context.read<AssetsBloc>().add(
-                                          AssestEventRemoveFromFav(
-                                            id: state.coins[i].id,
-                                            index: i,
-                                          ),
-                                        );
-                                  } else {
-                                    context.read<AssetsBloc>().add(
-                                          AssestEventAddToFav(
-                                            id: state.coins[i].id,
-                                            index: i,
-                                          ),
-                                        );
-                                  }
+                                  context.read<AssetsBloc>().add(
+                                        AssestEventAddToFav(
+                                          id: state.favs[i].id,
+                                          index: i,
+                                        ),
+                                      );
                                 }
                               },
                             );

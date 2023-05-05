@@ -89,6 +89,30 @@ class CoinEntity extends Equatable {
     );
   }
 
+  CoinEntity fromEntity(CoinEntity entity) {
+    return CoinEntity(
+      id: entity.id,
+      icon: entity.icon,
+      name: entity.name,
+      symbol: entity.symbol,
+      rank: entity.rank,
+      price: entity.price,
+      priceBtc: entity.priceBtc,
+      volume: entity.volume,
+      marketCap: entity.marketCap,
+      availableSupply: entity.availableSupply,
+      totalSupply: entity.totalSupply,
+      priceChange1h: entity.priceChange1h,
+      priceChange1d: entity.priceChange1d,
+      priceChange1w: entity.priceChange1w,
+      websiteUrl: entity.websiteUrl,
+      redditUrl: entity.redditUrl,
+      twitterUrl: entity.twitterUrl,
+      liked: entity.liked,
+      exp: entity.exp,
+    );
+  }
+
   factory CoinEntity.fromModel(CoinModel model) {
     return CoinEntity(
       id: model.id,
@@ -112,6 +136,7 @@ class CoinEntity extends Equatable {
       exp: model.exp,
     );
   }
+
   factory CoinEntity.fromDao(CoinDao dao) {
     return CoinEntity(
       id: dao.id,

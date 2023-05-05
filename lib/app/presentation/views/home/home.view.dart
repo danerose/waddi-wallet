@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/assets.event.dart';
+import 'package:waddi_wallet_app/app/presentation/bloc/coins/assets/timer_assets.cubit.dart';
 
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.bloc.dart';
 import 'package:waddi_wallet_app/app/presentation/bloc/config/config.event.dart';
@@ -20,13 +21,21 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: BlocProvider.of<AssetsBloc>(context)
-        ..add(
-          AssestEventInit(
-            currency: context.read<ConfigBloc>().state.currency,
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(
+          value: BlocProvider.of<AssetsBloc>(context)
+            ..add(
+              AssestEventInit(
+                showLoading: true,
+                currency: context.read<ConfigBloc>().state.currency,
+              ),
+            ),
         ),
+        BlocProvider<TimerAssetsCubit>(
+          create: (_) => TimerAssetsCubit(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           leading: BlocBuilder<ConfigBloc, ConfigState>(
@@ -74,6 +83,25 @@ class HomeView extends StatelessWidget {
             },
           ),
           actions: [
+            BlocListener<TimerAssetsCubit, int>(
+              listener: (BuildContext context, int state) {
+                if (state == 0) {
+                  context.read<TimerAssetsCubit>().starTimer();
+                  context.read<AssetsBloc>().add(
+                        AssestEventInit(
+                          showLoading: false,
+                          currency: context.read<ConfigBloc>().state.currency,
+                        ),
+                      );
+                }
+              },
+              child: BlocBuilder<TimerAssetsCubit, int>(
+                // bloc: context.read<TimerAssetsCubit>().starTimer(60),
+                builder: (BuildContext context, int state) {
+                  return Text('$state s');
+                },
+              ),
+            ),
             BlocBuilder<ConfigBloc, ConfigState>(
               buildWhen: (p, c) => p.currency != c.currency,
               builder: (BuildContext context, ConfigState config) {
@@ -86,7 +114,7 @@ class HomeView extends StatelessWidget {
                             ConfigEventChangeCurrency(currency: value),
                           );
                       context.read<AssetsBloc>().add(
-                            AssestEventInit(currency: value),
+                            AssestEventInit(showLoading: true, currency: value),
                           );
                     },
                   ),

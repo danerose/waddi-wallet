@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:waddi_wallet_app/app/domain/usecases/coins/add_fav_coin.usecase.dart';
@@ -34,10 +36,13 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
     AssestEventInit event,
     Emitter<AssetsState> emit,
   ) async {
-    emit(state.copyWith(
-      loading: true,
-      currency: event.currency,
-    ));
+    emit(
+      state.copyWith(
+        loading: event.showLoading,
+        currency: event.currency,
+        coins: [],
+      ),
+    );
 
     final res = await _getCoinsUsecase.execute(
       skip: state.skip,
@@ -52,9 +57,19 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
         loading: false,
       ));
     }, (List<CoinEntity> r) {
+      List<CoinEntity> favs = [];
+      for (var i = 0; i < state.favs.length; i++) {
+        for (var x = 0; x < r.length; x++) {
+          if (state.favs[i].id == r[x].id) {
+            r[x] = r[x].copyWith(liked: true);
+            favs.add(r[x]);
+          }
+        }
+      }
       emit(state.copyWith(
         status: 200,
         coins: r,
+        favs: favs,
         loading: false,
         error: ExceptionEnum.none,
       ));
@@ -75,10 +90,14 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
     AssestEventRemoveFromFav event,
     Emitter<AssetsState> emit,
   ) async {
-    final coin = state.coins[event.index].copyWith(liked: false);
-    state.coins[event.index] = coin;
-    state.favs.removeWhere((e) => e.id == event.id);
-    emit(state.copyWith(favs: [...state.favs]));
-    emit(state.copyWith(coins: state.coins));
+    final index = state.coins.indexWhere((e) => e.id == event.id);
+    final coin = state.coins[index].copyWith(liked: false);
+    state.coins[index] = coin;
+    final favs = state.favs;
+    final coins = state.coins;
+    favs.removeWhere((e) => e.id == event.id);
+    emit(state.copyWith(favs: [], coins: []));
+    emit(state.copyWith(favs: favs));
+    emit(state.copyWith(coins: coins));
   }
 }
