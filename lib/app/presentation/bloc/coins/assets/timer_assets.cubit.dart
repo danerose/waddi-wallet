@@ -9,12 +9,12 @@ class TimerAssetsCubit extends Cubit<int> {
   }
 
   Timer? _timer;
-  Duration _duration = const Duration(seconds: 10);
+  Duration _duration = const Duration(seconds: 60);
 
   void _onTick() {
     final sec = _duration.inSeconds - 1;
     if (sec <= 0) {
-      _duration = const Duration(seconds: 10);
+      _duration = const Duration(seconds: 60);
       _timer!.cancel();
       emit(0);
     } else {
